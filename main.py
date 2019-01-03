@@ -13,16 +13,17 @@ def load_data(path, column_mappings = {'Time': 'ds', 'prod08.ld5': 'y'}):
 def fix_nan_data(df):
     for index, row in df.iterrows():
         if row['y'].strip() == 'No Data':
-            row['y'] = None
-            df[index] = row
+            row.loc['y'] = None
+            df.loc[index] = row
 
 def run():
     # df = load_data('./data/example_wp_log_peyton_manning.csv')
-    df = load_data('./data/santaba-demo4.csv')
+    # df = load_data('./data/santaba-demo4.csv')
     # df = load_data('./data/relayserver-CPU-1-month.csv', { 'Time': 'ds', 'cpu_usagePercentCores': 'y' })
-    # df = load_data('./data/relayserver-CPU-3-month.csv', { 'Time': 'ds', 'cpu_usagePercentCores': 'y' })
+    df = load_data('./data/relayserver-CPU-3-month.csv', { 'Time': 'ds', 'cpu_usagePercentCores': 'y' })
     # df = load_data('./data/HTTPS-Response_Time.csv', { 'Time': 'ds', 'Page load time': 'y' })
-    # fix_nan_data(df)
+    
+    fix_nan_data(df)
 
     df.head()
 
@@ -45,8 +46,12 @@ def run():
         lower = p[2]
         upper = p[3]
 
+        if current is None or lower is None or upper is None:
+            continue
+
+        current = float(current)
         if current > upper or current < lower:
-            plt.plot(ds, current, 'ro', markersize=6)
+            plt.plot(ds, current, 'ro')
 
     plt.show()
 
