@@ -14,3 +14,4 @@ pystan==2.18.1.0
 python-dateutil==2.7.5
 pytz==2018.7
 six==1.12.0
+stopwatch.py==1.0.1
