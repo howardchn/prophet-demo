@@ -1,5 +1,6 @@
 import pandas as pd
-from fbprophet import Prophet
+# from fbprophet import Prophet
+from myprophet import MyProphet
 import matplotlib.pyplot as plt
 from stopwatch import Stopwatch
 
@@ -29,7 +30,9 @@ def run():
     sw = Stopwatch()
     sw.start()
 
-    m = Prophet()
+    # 0.95 means less anomaly noise, default is 0.8
+    # m = Prophet(interval_width = 0.95)
+    m = MyProphet(interval_width = 0.95)
     m.fit(df)
 
     future = m.make_future_dataframe(periods = 0)
